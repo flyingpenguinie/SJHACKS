@@ -3,7 +3,7 @@ session_start();
 
 // Redirect if not logged in\
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.html');
+    echo $user_id;
     exit;
 }
 
@@ -37,7 +37,7 @@ try {
                     $stmt = $pdo->prepare("UPDATE users SET profile_pic = ? WHERE user_id = ?");
                     $stmt->execute(["uploads/{$newName}", $_SESSION['user_id']]);
                     // Redirect to refresh
-                    header('Location: profile.php');
+                    header('Location: editProfile.php');
                     exit;
                 }
             }
@@ -237,11 +237,13 @@ li small {
 </head>
 <body>
   <h1>Welcome, <?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?></h1>
+  
   <img
-    src="<?= htmlspecialchars($user['profile_pic'] ?: 'default-avatar.png') ?>"
-    alt="Profile Picture"
-    class="profile-pic"
-  >
+  src="<?= htmlspecialchars($user['profile_pic'] ?: '') ?>"
+  alt="User avatar"
+  class="profile-pic"
+  onerror="this.onerror=null; this.src='uploads/blankavatar.jpg';"
+/>
   <p><strong>Email:</strong> <?= htmlspecialchars($user['email']) ?></p>
 
   <div class="section">

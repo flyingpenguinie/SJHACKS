@@ -1,0 +1,60 @@
+[33mcommit 1058716ee8e42f59945aa51f66201d336b561d44[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: JonathanEstudillo <johnnyestudillo714@gmail.com>
+Date:   Sun Apr 27 06:10:00 2025 -0700
+
+    Job Search
+
+[33mcommit f71fa9847d86b8ccc2ffad917b8ee4958f879daa[m
+Author: Daeren Loi <daerenloi@gmail.com>
+Date:   Sun Apr 27 05:33:18 2025 -0700
+
+    edit profile, employeehome, employerhome
+
+[33mcommit 23a434204a6e5591b79d62f6d47ea2ad7bc6bd30[m
+Author: Aleksandre Lashkarava <lashkaravaaleks@gmail.com>
+Date:   Sun Apr 27 05:30:41 2025 -0700
+
+    community page v2
+
+[33mcommit ad02d53fdd26f74f9407d978dd33787ac5a5ff25[m
+Merge: 73398d3 a6665c7
+Author: Aleksandre Lashkarava <lashkaravaaleks@gmail.com>
+Date:   Sun Apr 27 04:47:19 2025 -0700
+
+    Merge branch 'main' of https://github.com/flyingpenguinie/SJHACKS
+
+[33mcommit 73398d34e6820181338aa1a9defd774b28e8b35d[m
+Author: Aleksandre Lashkarava <lashkaravaaleks@gmail.com>
+Date:   Sun Apr 27 04:44:47 2025 -0700
+
+    community php file
+
+[33mcommit a6665c7f188145fd0eb4fd86fe7a94ded8f24845[m
+Author: Daeren Loi <daerenloi@gmail.com>
+Date:   Sun Apr 27 04:02:47 2025 -0700
+
+    create account and signin
+
+[33mcommit 1e0fb66f360a639ea884b8561113fb4080159e77[m
+Author: Jonathan Estudillo <jonathan.estudillo@sjsu.edu>
+Date:   Sat Apr 26 22:14:57 2025 -0700
+
+    Create Account and Sign In
+
+[33mcommit 9885e840ba77a876900154513281b5495f7252a7[m
+Author: Aleksandre Lashkarava <lashkaravaaleks@gmail.com>
+Date:   Sat Apr 26 16:59:33 2025 -0700
+
+    first draft of pages
+
+[33mcommit a2bd539365bde3312bfcd6bde6cc14c410169d5e[m
+Author: flyingpenuginy <seongkang05@gmail.com>
+Date:   Sat Apr 26 15:35:37 2025 -0700
+
+    added index.js
+
+[33mcommit 6037f320997a8f7817ccabee0bd5a4ae51928c3d[m
+Author: Seong Kang <147529513+flyingpenguinie@users.noreply.github.com>
+Date:   Sat Apr 26 10:41:51 2025 -0700
+
+    Initial commit
