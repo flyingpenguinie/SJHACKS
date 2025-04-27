@@ -161,7 +161,7 @@
             <iframe src="Community.php" title="Community Preview"></iframe>
         </div>
         <div id="jobsearch" class="preview">
-            <iframe src="JobSearch.php" title="Job Search Preview"></iframe>
+            <iframe src="jobselectionpage.php" title="Job Search Preview"></iframe>
         </div>
         <div id="messages" class="preview">
             <iframe src="messages.php" title="Messages Preview"></iframe>
