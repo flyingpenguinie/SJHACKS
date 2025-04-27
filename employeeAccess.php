@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['employer_id'])) {
-    header('Location: employerhome.php');
+    header('Location: EmployeeHomepage.php');
     exit();
 }
 ?>
@@ -11,7 +11,7 @@ if (isset($_SESSION['employer_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employer Sign In - Pathfinder</title>
+    <title>Employee Sign In - Pathfinder</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -53,7 +53,7 @@ if (isset($_SESSION['employer_id'])) {
 </head>
 <body>
 
-    <h2>Employer Access</h2>
+    <h2>Employee Access</h2>
     <div class="button-container">
         <a href="createaccount.php"><button class="btn">Create Account</button></a>
         <a href="signin.php"><button class="btn">Sign In</button></a>

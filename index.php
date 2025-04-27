@@ -67,13 +67,11 @@
     </style>
 </head>
 <body>
-
     <h1>Welcome to Pathfinder</h1>
     <p>Our mission is to empower low-income and homeless individuals by connecting them to meaningful work opportunities. Start with odd jobs, build credibility, and step into a brighter future.</p>
     <div class="button-container">
-        <a href="join_employee.php"><button class="btn">Join as Employee</button></a>
-        <a href="employersignin.php"><button class="btn">Join as Employer</button></a>
+        <a href="signIn.php"><button class="btn">Sign In</button></a>
+        <a href="createaccount.php"><button class="btn">Create Account</button></a>
     </div>
-
 </body>
 </html>
