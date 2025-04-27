@@ -20,17 +20,30 @@
             background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
             color: #fff;
         }
-        /* Centered title + subtitle */
-        .header-text {
-            text-align: center;
+        header {
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
         }
-        .header-text h1 {
-            font-size: 1.75rem;
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
         }
-        .header-text .subtitle {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.85);
-            margin-top: 0.25rem;
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
         }
         /* Profile */
         .profile {
@@ -53,16 +66,18 @@
         /* Previews */
         .preview { display: none; }
         .preview.active { display: block; }
-        .preview iframe { width: 100%; height: 400px; border: none; border-radius: 6px;
+        .preview iframe { width: 100%; height: calc(100vh - 200px); border: none; border-radius: 6px;
                           box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         main { padding: 0 2rem 2rem; }
     </style>
 </head>
 <body>
     <header>
-        <div class="header-text">
-            <h1>Welcome to Pathfinder</h1>
-            <p class="subtitle">Your gateway to community, job search, and messages.</p>
+    <div class="container">
+            <div class="logo">
+                <i class="fas fa-route"></i>
+                PathFinder
+            </div>
         </div>
         <div class="profile">
             <img src="path/to/profile.jpg" alt="Profile" id="profilePic">
