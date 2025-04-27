@@ -13,31 +13,56 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle application submission via AJAX
+
+// … your existing connection and POST‐apply block…
+
 if (isset($_POST['apply']) && isset($_POST['employer_name']) && isset($_POST['listing_id'])) {
     $employer_name = $_POST['employer_name'];
-    $listing_id = $_POST['listing_id'];
+    $listing_id    = (int)$_POST['listing_id'];
     
-    // Insert into chat_users table
-    $insertSql = "INSERT INTO chat_users (employer_name, listing_id, application_date) 
-                  VALUES (?, ?, NOW())";
-    
+    // 1) record the application
+    $insertSql  = "INSERT INTO chat_users (employer_name, listing_id, application_date) VALUES (?, ?, NOW())";
     $insertStmt = $conn->prepare($insertSql);
     $insertStmt->bind_param("si", $employer_name, $listing_id);
-    
-    $response = array();
-    if ($insertStmt->execute()) {
-        $response['success'] = true;
-        $response['message'] = "Application submitted successfully";
-    } else {
-        $response['success'] = false;
-        $response['message'] = "Error: " . $insertStmt->error;
-    }
-    
+    $ok1 = $insertStmt->execute();
     $insertStmt->close();
-    echo json_encode($response);
+    
+    // 2) ALSO insert into messages
+    //    (adjust columns to match your messages schema)
+    $user = "user";
+    $messageText = "Thank you for applying to our position! We've received your application and will review it shortly. Do you have any questions about the role?
+";
+    $replyText = "Please Check Out my Profile! (Embedded Link to Profile)";
+    $msgSql  = "INSERT INTO messages (sender, recipient, message_text, timestamp) VALUES (?, ?, ?, NOW())";
+    $msgStmt = $conn->prepare($msgSql);
+    $msgStmt->bind_param("sss", $employer_name, $user, $messageText);
+
+    $replySql  = "INSERT INTO messages (sender, recipient, message_text, timestamp) VALUES (?, ?, ?, NOW())";
+    $replyStmt = $conn->prepare($msgSql);
+    $replyStmt->bind_param("sss", $user, $employer_name, $replyText);
+
+    $ok2 = $msgStmt->execute();
+    $msgStmt->close();
+
+    $ok3 = $replyStmt->execute();
+    $replyStmt->close();
+
+
+    // 3) send JSON response
+    header('Content-Type: application/json');
+    if ($ok1 && $ok2 && $ok3) {
+        echo json_encode(['success'=>true, 'message'=>'Applied and message sent.']);
+    } else {
+        echo json_encode([
+          'success'=>false,
+          'message'=>'Error: '.
+                      ($ok1? '' : $conn->error).
+                      ($ok2? '' : $conn->error)
+        ]);
+    }
     exit;
 }
+
 
 // Handle search filters if submitted
 $whereClause = "WHERE hidden = 0";
