@@ -67,8 +67,7 @@
         <div class="profile">
             <img src="path/to/profile.jpg" alt="Profile" id="profilePic">
             <div class="dropdown" id="profileDropdown">
-                <a href="profileSettings.php">Profile Settings</a>
-                <a href="accountSettings.php">Account Settings</a>
+                <a href="editProfile.php">Profile</a>
                 <a href="logout.php">Log Out</a>
             </div>
         </div>
