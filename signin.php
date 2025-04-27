@@ -2,8 +2,8 @@
 session_start();
 
 $host    = 'localhost';
-$dbUser  = 'db_user';    // your DB username
-$dbPass  = 'db_pass';    // your DB password
+$dbUser  = 'root';    // your DB username
+$dbPass  = '';    // your DB password
 $dbName  = 'pathfinder'; // ensure this matches your database name
 
 // Connect via MySQLi
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     // Fetch hashed password and user type from users table
-    $stmt = $conn->prepare("SELECT id, password_hash, user_type FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT user_id, password_hash, role FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
