@@ -13,77 +13,141 @@
         * { margin:0; padding:0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7fa; color: #333; }
         a { text-decoration: none; color: inherit; }
-        /* Header */
-        header {
-            position: relative;
-            padding: 1.5rem 2rem;
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
-            color: #fff;
-        }
-        header {
-            background-color: white;
-            box-shadow: var(--card-shadow);
-            padding: 1rem 0;
-            margin-bottom: 2rem;
+        
+        /* Variables */
+        :root {
+            --primary-color: #4b6cb7;
+            --secondary-color: #182848;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        header .container {
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: var(--card-shadow);
+            position: relative;
+        }
+        
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 2rem;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
             display: flex;
             align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
         
         .logo i {
             margin-right: 0.5rem;
+            font-size: 1.75rem;
         }
+        
         /* Profile */
         .profile {
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
+            position: relative;
         }
-        .profile img { width:48px; height:48px; border-radius:50%; cursor: pointer; border: 2px solid #fff; }
-        .dropdown { display: none; position: absolute; right:0; top: calc(100% + 0.5rem);
-                    background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    overflow: hidden; width: 160px; }
-        .dropdown a { display: block; padding: 0.75rem 1rem; font-size: 0.95rem; color:#333; }
-        .dropdown a:hover { background: #f4f4f4; }
+        
+        .profile img { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            border: 2px solid #fff; 
+        }
+        
+        .dropdown { 
+            display: none; 
+            position: absolute; 
+            right: 0; 
+            top: calc(100% + 0.5rem);
+            background: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden; 
+            width: 160px; 
+            z-index: 100;
+        }
+        
+        .dropdown a { 
+            display: block; 
+            padding: 0.75rem 1rem; 
+            font-size: 0.95rem; 
+            color: #333; 
+        }
+        
+        .dropdown a:hover { 
+            background: #f4f4f4; 
+        }
+        
         /* Tabs */
-        .tabs { display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0; }
-        .tab { padding: 0.75rem 1.5rem; background: #e0e4e8; border-radius: 8px; cursor: pointer;
-               transition: background 0.2s ease, transform 0.2s ease; }
-        .tab:hover { transform: translateY(-2px); }
-        .tab.active { background: #4b6cb7; color: #fff; }
+        .tabs { 
+            display: flex; 
+            justify-content: center; 
+            gap: 1rem; 
+            margin: 1.5rem 0; 
+        }
+        
+        .tab { 
+            padding: 0.75rem 1.5rem; 
+            background: #e0e4e8; 
+            border-radius: 8px; 
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease; 
+        }
+        
+        .tab:hover { 
+            transform: translateY(-2px); 
+        }
+        
+        .tab.active { 
+            background: var(--primary-color); 
+            color: #fff; 
+        }
+        
         /* Previews */
-        .preview { display: none; }
-        .preview.active { display: block; }
-        .preview iframe { width: 100%; height: calc(100vh - 200px); border: none; border-radius: 6px;
-                          box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        main { padding: 0 2rem 2rem; }
+        .preview { 
+            display: none; 
+        }
+        
+        .preview.active { 
+            display: block; 
+        }
+        
+        .preview iframe { 
+            width: 100%; 
+            height: calc(100vh - 200px); 
+            border: none; 
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+        }
+        
+        main { 
+            padding: 0 2rem 2rem; 
+        }
     </style>
 </head>
 <body>
-    <header>
-    <div class="container">
+<header>
+        <div class="header-container">
             <div class="logo">
                 <i class="fas fa-route"></i>
                 PathFinder
             </div>
-        </div>
-        <div class="profile">
-            <img src="path/to/profile.jpg" alt="Profile" id="profilePic">
-            <div class="dropdown" id="profileDropdown">
-                <a href="editProfile.php">Profile</a>
-                <a href="logout.php">Log Out</a>
+            <div class="profile">
+                <img src="path/to/profile.jpg" alt="Profile" id="profilePic">
+                <div class="dropdown" id="profileDropdown">
+                    <a href="editProfile.php">Profile</a>
+                    <a href="logout.php">Log Out</a>
+                </div>
             </div>
         </div>
     </header>

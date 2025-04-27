@@ -164,7 +164,7 @@
             <iframe src="Community.php" title="Community Preview"></iframe>
         </div>
         <div id="listings" class="preview">
-            <iframe src="listings.php" title="Listings Preview"></iframe>
+            <iframe src="Listings.php" title="Listings Preview"></iframe>
         </div>
         <div id="messages" class="preview">
             <iframe src="messages.php" title="Messages Preview"></iframe>
