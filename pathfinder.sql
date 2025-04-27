@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2025 at 06:30 PM
+-- Generation Time: Apr 27, 2025 at 06:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,9 @@ CREATE TABLE `chat_users` (
 INSERT INTO `chat_users` (`id`, `employer_name`, `listing_id`, `application_date`) VALUES
 (1, 'Micheal', 0, '0000-00-00 00:00:00'),
 (2, 'Micheal Jackson', 1, '2025-04-27 09:21:07'),
-(3, 'Sunny Daryl', 6, '2025-04-27 09:21:50');
+(3, 'Sunny Daryl', 6, '2025-04-27 09:21:50'),
+(4, 'Sunny Daryl', 5, '2025-04-27 09:42:21'),
+(5, 'Sunny Daryl', 5, '2025-04-27 09:45:01');
 
 -- --------------------------------------------------------
 
@@ -55,16 +57,17 @@ CREATE TABLE `employees` (
   `employee_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `rating` decimal(3,2) DEFAULT NULL,
-  `verified` tinyint(1) NOT NULL DEFAULT 0
+  `verified` tinyint(1) NOT NULL DEFAULT 0,
+  `RatingCount` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`employee_id`, `user_id`, `rating`, `verified`) VALUES
-(1, 1, 4.60, 1),
-(2, 4, 4.20, 0);
+INSERT INTO `employees` (`employee_id`, `user_id`, `rating`, `verified`, `RatingCount`) VALUES
+(1, 1, 4.60, 1, 4),
+(2, 4, 4.20, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -162,7 +165,13 @@ CREATE TABLE `messages` (
 INSERT INTO `messages` (`id`, `sender`, `recipient`, `message_text`, `timestamp`, `is_read`) VALUES
 (1, 'Micheal', 'user', 'Hello user', '2025-04-28 01:19:03', 0),
 (2, 'Micheal', 'user', 'Thank you for applying to our position! We\'ve received your application and will review it shortly. Do you have any questions about the role?', '2025-04-28 01:19:05', 0),
-(3, 'user', 'Micheal', 'Hi, I saw the listing about the lawn moving service and I\'m interested!', '2025-04-28 01:19:55', 0);
+(3, 'user', 'Micheal', 'Hi, I saw the listing about the lawn moving service and I\'m interested!', '2025-04-28 01:19:55', 0),
+(4, 'Sunny Daryl', 'user', 'Thank you for applying to our position! We\'ve received your application and will review it shortly. Do you have any questions about the role?\r\n', '2025-04-27 16:42:21', 0),
+(5, 'user', 'Sunny Daryl', 'Please Check Out my Profile! (Embedded Link to Profile)', '2025-04-27 16:42:21', 0),
+(6, 'user', 'Micheal', 'jhd', '2025-04-28 01:42:45', 0),
+(7, 'Sunny Daryl', 'user', 'Thank you for applying to our position! We\'ve received your application and will review it shortly. Do you have any questions about the role?\r\n', '2025-04-27 16:45:01', 0),
+(8, 'user', 'Sunny Daryl', 'Please Check Out my Profile! (Embedded Link to Profile)', '2025-04-27 16:45:01', 0),
+(9, 'user', 'Micheal', 'Hello Im interested in a job.', '2025-04-28 01:45:21', 0);
 
 -- --------------------------------------------------------
 
@@ -290,7 +299,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chat_users`
 --
 ALTER TABLE `chat_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `employees`
@@ -320,7 +329,7 @@ ALTER TABLE `listings`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
