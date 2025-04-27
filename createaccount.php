@@ -59,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // redirect to the appropriate homepage
             if ($role === 'employee') {
-                header('Location: EmployeeHomepage.php');
+                header('Location: signin.php');
             } else {
-                header('Location: EmployerHomepage.php');
+                header('Location: signin.php');
             }
             exit;
         } else {
