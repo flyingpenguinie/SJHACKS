@@ -13,6 +13,32 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Handle application submission via AJAX
+if (isset($_POST['apply']) && isset($_POST['employer_name']) && isset($_POST['listing_id'])) {
+    $employer_name = $_POST['employer_name'];
+    $listing_id = $_POST['listing_id'];
+    
+    // Insert into chat_users table
+    $insertSql = "INSERT INTO chat_users (employer_name, listing_id, application_date) 
+                  VALUES (?, ?, NOW())";
+    
+    $insertStmt = $conn->prepare($insertSql);
+    $insertStmt->bind_param("si", $employer_name, $listing_id);
+    
+    $response = array();
+    if ($insertStmt->execute()) {
+        $response['success'] = true;
+        $response['message'] = "Application submitted successfully";
+    } else {
+        $response['success'] = false;
+        $response['message'] = "Error: " . $insertStmt->error;
+    }
+    
+    $insertStmt->close();
+    echo json_encode($response);
+    exit;
+}
+
 // Handle search filters if submitted
 $whereClause = "WHERE hidden = 0";
 $params = [];
@@ -86,6 +112,7 @@ $result = $stmt->get_result();
             --border-color: #e5e7eb;
             --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --disabled-color: #9ca3af;
         }
         
         * {
@@ -106,8 +133,6 @@ $result = $stmt->get_result();
             margin: 0 auto;
             padding: 2rem;
         }
-        
-       
         
         .search-form {
             background-color: white;
@@ -318,6 +343,15 @@ $result = $stmt->get_result();
             background-color: #0da271;
         }
         
+        .applied-btn {
+            background-color: var(--disabled-color);
+            cursor: default;
+        }
+        
+        .applied-btn:hover {
+            background-color: var(--disabled-color);
+        }
+        
         .no-results {
             text-align: center;
             padding: 3rem;
@@ -400,6 +434,31 @@ $result = $stmt->get_result();
         .job-card:nth-child(3) { animation-delay: 0.2s; }
         .job-card:nth-child(4) { animation-delay: 0.3s; }
         .job-card:nth-child(5) { animation-delay: 0.4s; }
+        
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s, fadeOut 0.5s 2.5s;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -452,6 +511,9 @@ $result = $stmt->get_result();
                 </div>
             </div>
         </form>
+        
+        <!-- Toast notification -->
+        <div id="toast" class="toast"></div>
         
         <div class="job-results">
             <?php
@@ -519,10 +581,10 @@ $result = $stmt->get_result();
                     echo '            <i class="far fa-clock"></i>';
                     echo '            <span>Posted ' . $timeAgo . '</span>';
                     echo '        </div>';
-                    echo '        <a href="job-details.php?id=' . $row['listing_id'] . '" class="apply-btn">';
-                    echo '            <i class="fas fa-external-link-alt"></i>';
-                    echo '            View Details';
-                    echo '        </a>';
+                    echo '        <button class="apply-btn" data-listing-id="' . $row['listing_id'] . '" data-employer="' . htmlspecialchars($row['employer_name']) . '">';
+                    echo '            <i class="fas fa-paper-plane"></i>';
+                    echo '            Apply';
+                    echo '        </button>';
                     echo '    </div>';
                     echo '</div>';
                 }
@@ -549,7 +611,6 @@ $result = $stmt->get_result();
     </div>
     
     <script>
-        // Add some interactivity
         document.addEventListener('DOMContentLoaded', function() {
             // Highlight search form inputs on focus
             const formInputs = document.querySelectorAll('.form-group input, .form-group select');
@@ -562,6 +623,62 @@ $result = $stmt->get_result();
                     this.parentElement.style.boxShadow = 'none';
                 });
             });
+            
+            // Handle Apply button clicks
+            const applyButtons = document.querySelectorAll('.apply-btn');
+            applyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const btn = this;
+                    const listingId = btn.getAttribute('data-listing-id');
+                    const employerName = btn.getAttribute('data-employer');
+                    
+                    // Check if already applied
+                    if (btn.classList.contains('applied-btn')) {
+                        showToast('You have already applied for this job');
+                        return;
+                    }
+                    
+                    // AJAX request to submit application
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', window.location.href, true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState === XMLHttpRequest.DONE) {
+                            if (this.status === 200) {
+                                try {
+                                    const response = JSON.parse(this.responseText);
+                                    if (response.success) {
+                                        // Update button appearance
+                                        btn.classList.add('applied-btn');
+                                        btn.innerHTML = '<i class="fas fa-check"></i> Applied';
+                                        showToast('Application submitted successfully!');
+                                    } else {
+                                        showToast('Error: ' + response.message);
+                                    }
+                                } catch (e) {
+                                    showToast('Error processing response');
+                                }
+                            } else {
+                                showToast('Error submitting application');
+                            }
+                        }
+                    };
+                    xhr.send('apply=true&employer_name=' + encodeURIComponent(employerName) + 
+                             '&listing_id=' + encodeURIComponent(listingId));
+                });
+            });
+            
+            // Toast notification function
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.style.display = 'block';
+                
+                // Hide after 3 seconds
+                setTimeout(function() {
+                    toast.style.display = 'none';
+                }, 3000);
+            }
         });
     </script>
 </body>
