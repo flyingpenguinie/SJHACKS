@@ -30,14 +30,24 @@ $event_result = $mysqli->query($event_query);
 
 // Handle user search (PDO)
 $pdo = new PDO('mysql:host=127.0.0.1;dbname=pathfinder', 'root', '');
+// new: grab rating & count too
 if (isset($_GET['search'])) {
-    $search = trim($_GET['search']);
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE first_name LIKE ? OR last_name LIKE ?");
-    $stmt->execute(["%$search%", "%$search%"]);
+  $stmt = $pdo->prepare("
+    SELECT u.*, e.rating, e.RatingCount
+    FROM users u
+    LEFT JOIN employees e ON u.user_id = e.user_id
+    WHERE u.first_name LIKE ? OR u.last_name LIKE ?
+  ");
+  $stmt->execute(["%$search%", "%$search%"]);
 } else {
-    $stmt = $pdo->query("SELECT * FROM users");
+  $stmt = $pdo->query("
+    SELECT u.*, e.rating, e.RatingCount
+    FROM users u
+    LEFT JOIN employees e ON u.user_id = e.user_id
+  ");
 }
 $users = $stmt->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -121,6 +131,33 @@ $users = $stmt->fetchAll();
       <p class="text-gray-500"><?= htmlspecialchars($user['email']) ?></p>
       <p class="text-gray-500">Role: <?= htmlspecialchars($user['role']) ?></p>
       <img src="<?= htmlspecialchars($user['profile_pic']) ?>" alt="Profile Picture" class="w-20 h-20 rounded-full mt-2">
+    
+      <?php if ($user['role'] === 'employee' && $user['rating'] !== null): ?>
+  <div class="mt-2 flex items-center">
+    <?php
+      // round to nearest star
+      $stars = round($user['rating']);
+      for ($i = 1; $i <= 5; $i++) {
+        if ($i <= $stars) {
+          echo '<span class="text-yellow-400 text-sm">&#9733;</span>'; // filled
+        } else {
+          echo '<span class="text-gray-300 text-sm">&#9733;</span>';  // empty
+        }
+      }
+    ?>
+    <!-- numeric average plus count -->
+    <span class="text-gray-500 text-sm ml-2">
+      <?= number_format($user['rating'], 1) ?> 
+      <?php if (!empty($user['RatingCount'])): ?>
+        (<?= intval($user['RatingCount']) ?> reviews)
+      <?php else: ?>
+        (no reviews)
+      <?php endif; ?>
+    </span>
+  </div>
+<?php endif; ?>
+
+      
     </div>
     <?php endforeach; ?>
   </div>
