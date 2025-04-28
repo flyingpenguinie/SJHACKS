@@ -1,5 +1,7 @@
-# SJHACKS
+We only had 24 hours to develop something that would help combat social issues in 3 categories, from which we chose homelessness. To really stand out, we didn't follow any suggested prompts and took full creative liberty to try to make something unique.
 
-please upload the sql file onto pathfinder on mysql
+At first we did some research and tried to think of possible problems the homeless might face, and it seemed like lack of access to documents was a big issue. But we thought- why are we sitting here on our computers? Why not just walk down the street for a few blocks and ask some people who are actually homeless? We wanted to get some user stories. So we did, and after asking around for actual struggles among the homeless population, we found out access to documents wasn't a problem at all. 
 
-this works xaamp
+Turns out, employability was much more of a problem for most people who wanted to get back into the workforce. Many homeless don't have any networks developed with employed people who can refer them. On top of this, they have massive gaps in their work histories, and it is very hard for employers to trust them for positions as a result.
+
+Our solution was a site, which could easily be accessed using library computers, that would help them build a work history and a reputation by doing small "odd jobs" for the users on the site. These jobs would be things like helping people move out, mowing the lawn. All simple chores that people don't want to do, yet don't want to hire a professional for. The site tries to create value out of the potential that exists within the homeless community, by giving them the chance to provide cheap labor. This approach makes it so our success doesn't depend on government funding, or charity. It is a way to create value for the needy, from unused resources (in this case, the capacity for labor).
